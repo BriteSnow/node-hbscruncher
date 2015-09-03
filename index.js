@@ -10,11 +10,11 @@ var ut8decoder = new StringDecoder('utf8');
 
 
 module.exports = {
-	hbscruncher: hbscruncher
+	precompile: hbspPrecompile
 };
 
 // --------- hbs plugin --------- //
-function hbscruncher(){
+function hbspPrecompile(){
 	return through.obj(function(inFile, enc, cb){
 		
 		// get the string content
