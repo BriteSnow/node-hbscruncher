@@ -1,11 +1,9 @@
-var gulp = require("gulp");
 var path = require("path");
 var through = require("through2");
 var handlebars = require('handlebars');
 var StringDecoder = require('string_decoder').StringDecoder;
 var htmlparser = require("htmlparser2");
-var gutil = require('gulp-util');
-
+var File = require("vinyl");
 var ut8decoder = new StringDecoder('utf8');
 
 
@@ -33,10 +31,13 @@ function hbspPrecompile(){
 			resultContent += varLine;
 		}
 
-		var file = new gutil.File({
+		var inFilePathInfo = path.parse(inFile.path);
+		var filePath = path.join(inFilePathInfo.dir, inFilePathInfo.name + ".js");
+
+		var file = new File({
 		  cwd: inFile.cwd,
 		  base: inFile.base,
-		  path: gutil.replaceExtension(inFile.path, '.js'),
+		  path: filePath,
 		  contents: new Buffer(resultContent)
 		});
 

@@ -1,28 +1,28 @@
 {
-	"name": "hbsp",
-	"version": "0.1.0",
-	"description": "A simple Handlebars precompile that support multiple template per files (still experiemental)",
-	"main": "index.js",  
+  "name": "hbsp",
+  "version": "0.1.0",
+  
+  "description": "A simple Handlebars precompile that support multiple templated per file (when <script tags) - still experimental",
 
-	"dependencies": {
-		"gulp-util": "^3.0.6",
-		"path": "^0.11.14",
-		"handlebars": "^4.0.0",
-		"string_decoder": "^0.10.31",
-		"htmlparser2": "^3.8.3",
-		"through2": "^2.0.0"
-	},
+  "main": "index.js",
 
-	"devDependencies": {
-		"chai": "^3.2.0",
-		"gulp": "^3.9.0",
-		"mocha": "^2.3.0"
-	},
+  "dependencies": {
+    "handlebars": "^4.0.0",
+    "htmlparser2": "^3.8.3",
+    "path": "^0.11.14",
+    "string_decoder": "^0.10.31",
+    "through2": "^2.0.0",
+    "vinyl": "^0.5.3"
+  },
 
-	"scripts": {
-		"test": "./node_modules/.bin/mocha --reporter spec"
-	},
-
-	"author": "",
-	"license": "ISC"
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "gulp": "^3.9.0",
+    "mocha": "^2.3.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "",
+  "license": "ISC"
 }
