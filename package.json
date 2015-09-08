@@ -6,6 +6,14 @@
 
   "main": "index.js",
 
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/BriteSnow/node-hbsp.git"
+  },
+
+  "keyword": ["handlebars", "template", "processing"],
+
+
   "dependencies": {
     "handlebars": "^4.0.0",
     "htmlparser2": "^3.8.3",
@@ -23,6 +31,10 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Jeremy Chone <jeremy.chone@gmail.com>",
+  "license": "MIT",  
+  
+  "bugs": {
+    "url": "https://github.com/BriteSnow/node-hbsp/issues"
+  }  
 }
