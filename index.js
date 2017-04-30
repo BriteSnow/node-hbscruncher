@@ -35,10 +35,10 @@ function hbspPrecompile(){
 		var filePath = path.join(inFilePathInfo.dir, inFilePathInfo.name + ".js");
 
 		var file = new File({
-		  cwd: inFile.cwd,
-		  base: inFile.base,
-		  path: filePath,
-		  contents: new Buffer(resultContent)
+			cwd: inFile.cwd,
+			base: inFile.base,
+			path: filePath,
+			contents: new Buffer(resultContent)
 		});
 
 		// call the callback for the next step
@@ -48,10 +48,10 @@ function hbspPrecompile(){
 
 
 function buildVarLine(name,precompiledFunc){
-		var varLine = "Handlebars.templates['" + name + "']  = Handlebars.template(";
-		varLine += precompiledFunc;
-		varLine += ");\n\n";	
-		return varLine;
+	var varLine = "Handlebars.templates['" + name + "']  = Handlebars.template(";
+	varLine += precompiledFunc;
+	varLine += ");\n\n";	
+	return varLine;
 }
 
 // parse a file content and return a [{name,content}] array of parts
@@ -70,25 +70,25 @@ function parseParts(filepath, content){
 	var currentPart = null;
 
 	var parser = new htmlparser.Parser({
-    onopentag: function(tagname, attribs){    		
-        if(tagname === "script"){
-            currentPart = {name:attribs.id, content:""};
-        }
-    },
+		onopentag: function(tagname, attribs){    		
+			if(tagname === "script"){
+				currentPart = {name:attribs.id, content:""};
+			}
+		},
 
-    ontext: function(text){
-    	if (currentPart){
-    		currentPart.content += text;
-    	}
-    },
+		ontext: function(text){
+			if (currentPart){
+				currentPart.content += text;
+			}
+		},
 
-    onclosetag: function(tagname){  		
-      if(tagname === "script" && currentPart){
-      	currentPart.content = currentPart.content.trim();
-      	parts.push(currentPart);
-      	currentPart = null;
-      }
-    }
+		onclosetag: function(tagname){  		
+			if(tagname === "script" && currentPart){
+				currentPart.content = currentPart.content.trim();
+				parts.push(currentPart);
+				currentPart = null;
+			}
+		}
 	}, {decodeEntities: true});
 
 	parser.write(content);
