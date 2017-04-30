@@ -14,8 +14,27 @@ npm install hbsp
 
 ## Usage
 
+Promise style, for pure js, async/await like coding style. 
+
 ```js
-var hbsPrecompile = require("hbs").precompile;
+const fs = require("fs");
+const promisify = require("async6").promisify; // could have used https://www.npmjs.com/package/promisify-node
+const hbsPrecompile = require("hbs").precompile;
+
+const readFile = promisify(fs.readFile, fs);
+
+readFile("./test/multiple.hbs","utf8").then(function(content){
+    return precompile("./test/multiple.hbs", content);
+}).then(function(template){
+    // template: here is the template(s) precompiles
+});
+```
+
+Stream style, for gulp like integration: 
+
+```js
+const gulp = require("gulp");
+const hbsPrecompile = require("hbs").streamPrecompile;
 
 gulp.task('hbs', function() {
     gulp.src('*.hbs')
@@ -24,6 +43,13 @@ gulp.task('hbs', function() {
     .pipe(gulp.dest("./js/"));
 });
 ```
+
+
+
+
+
+
+## File Examples
 
 *single.hbs*
 ```html

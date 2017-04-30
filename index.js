@@ -8,18 +8,50 @@ var ut8decoder = new StringDecoder('utf8');
 
 
 module.exports = {
-	precompile: hbspPrecompile
+	precompile, // to use promise style
+	streamPrecompile // to use stream style (.e.g, in gulp pipe)
 };
 
 // --------- hbs plugin --------- //
-function hbspPrecompile(){
+
+// To use stream style, in a gulp.pipe chain for example. 
+//
+// gulp.src(path.join(webappDir,"src/view/**/*.tmpl"))
+// 	.pipe(hbsPrecompile())
+// 	.pipe(concat("templates.js"))
+// 	.pipe(gulp.dest(jsDir));
+function streamPrecompile(){
 	return through.obj(function(inFile, enc, cb){
 		
+		var inFilePathInfo = path.parse(inFile.path);
+		var filePath = path.join(inFilePathInfo.dir, inFilePathInfo.name + ".js");		
+
 		// get the string content
 		var content = ut8decoder.write(inFile.contents).toString();
 
 		// get the parts (i.e. {name,content})
-		var parts = parseParts(inFile.path,content);
+
+		precompile(filePath, content).then(function(resultContent){
+			var file = new File({
+				cwd: inFile.cwd,
+				base: inFile.base,
+				path: filePath,
+				contents: new Buffer(resultContent)
+			});
+
+			// call the callback for the next step
+			cb(null, file);			
+		}).catch(function(ex){
+			cb(ex, null);
+		});
+
+	});
+}
+
+// To use in a promise style (pure JS, async/await)
+function precompile(filePath, content){
+	return new Promise(function(resolve, fail){
+		var parts = parseParts(filePath,content);
 
 		// for each part, precompile and build the varLine
 		var part;
@@ -31,20 +63,10 @@ function hbspPrecompile(){
 			resultContent += varLine;
 		}
 
-		var inFilePathInfo = path.parse(inFile.path);
-		var filePath = path.join(inFilePathInfo.dir, inFilePathInfo.name + ".js");
-
-		var file = new File({
-			cwd: inFile.cwd,
-			base: inFile.base,
-			path: filePath,
-			contents: new Buffer(resultContent)
-		});
-
-		// call the callback for the next step
-		cb(null, file);
+		resolve(resultContent);
 	});
 }
+// --------- /hbs plugin --------- //
 
 
 function buildVarLine(name,precompiledFunc){
@@ -95,4 +117,3 @@ function parseParts(filepath, content){
 
 	return parts;
 }
-// --------- /hbs plugin --------- //
