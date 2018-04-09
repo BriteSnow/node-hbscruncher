@@ -7,35 +7,34 @@ var fs = require("fs");
 
 // TODO: need to check output
 
-describe('stream style', function() {
+describe('stream style', function () {
 
-	it('all hbs', function(done) {
+	it('all hbs', function (done) {
 		//"hello".should.equal('hello');
 		gulp.src('./test/*.hbs')
 			.pipe(streamPrecompile())
-			.pipe(gulp.dest("./test/test-out/stream-style/")).on("end",function(){
-				console.log("done");
+			.pipe(gulp.dest("./test/test-out/stream-style/")).on("end", function () {
 				done();
 			});
 	});
 
 });
 
-describe('promise style', function() {
+describe('promise style', function () {
 
 	// should Include
 	var shouldHave = "Handlebars.templates['ProjectListNav-list']";
 
-	it('multiple.hbs', function(done) {
-		readFile("./test/multiple.hbs","utf8").then(function(content){
+	it('multiple.hbs', function (done) {
+		readFile("./test/multiple.hbs", "utf8").then(function (content) {
 			return precompile("./test/multiple.hbs", content);
-		}).then(function(template){
-			if (!template.includes(shouldHave)){
+		}).then(function (template) {
+			if (!template.includes(shouldHave)) {
 				done(`template does not contain ${shouldHave}\nTemplate:\n${template}`);
-			}else{
+			} else {
 				done();
 			}
-		}).catch(function(ex){
+		}).catch(function (ex) {
 			done(ex);
 		});
 	});
@@ -43,11 +42,11 @@ describe('promise style', function() {
 });
 
 
-function readFile(){
+function readFile() {
 	var args = Array.prototype.slice.call(arguments);
 
-	return new Promise(function(resolve, fail){
-		args.push(function(err, content){
+	return new Promise(function (resolve, fail) {
+		args.push(function (err, content) {
 			resolve(content);
 		});
 		fs.readFile.apply(fs, args);

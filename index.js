@@ -32,7 +32,6 @@ function precompile(filePath, content) {
 	});
 }
 
-// DEPRECATED
 // To use stream style, in a gulp.pipe chain for example. 
 //
 // gulp.src(path.join(webappDir,"src/view/**/*.tmpl"))
