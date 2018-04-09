@@ -1,7 +1,7 @@
 {
   "name": "hbsp",
   "version": "0.2.0",
-  
+  "typings": "types/index.d.ts",  
   "description": "A simple Handlebars precompile that support multiple templated per file (when <script tags) - still experimental",
 
   "main": "index.js",
@@ -12,7 +12,6 @@
   },
 
   "keyword": ["handlebars", "template", "processing"],
-
 
   "dependencies": {
     "handlebars": "^4.0.0",
