@@ -1,2 +1,2 @@
 
-export function precompile(filePath, content): Promise<string>
+export function precompile(filePath: string, content: string): Promise<string>

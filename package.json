@@ -1,6 +1,6 @@
 {
   "name": "hbsp",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "typings": "types/index.d.ts",
   "description": "A simple Handlebars precompile that support multiple templated per file (when <script tags) - still experimental",
   "main": "index.js",
@@ -23,7 +23,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "gulp": "^3.9.0",
-    "mocha": "^5.0.5"
+    "mocha": "^5.1.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
