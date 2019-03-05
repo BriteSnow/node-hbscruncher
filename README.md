@@ -1,8 +1,6 @@
 ## About
 
-Simple gulp frienly node module to precompile handlebars File. Compared to the standard Handlebars node module precompile, it does support multiple templates per file (with the ```<script id="template_name">....</script>```. 
-
-NOTE: Still experimental, not as a npm module yet. 
+Simple handlebars processor that supports multiple templates per file ```<script id="template_name" type="test/html">....</script>```. 
 
 ## Install
 
@@ -18,7 +16,6 @@ Promise style, for pure js, async/await like coding style.
 
 ```js
 const fs = require("fs");
-const promisify = require("async6").promisify; // could have used https://www.npmjs.com/package/promisify-node
 const hbsPrecompile = require("hbs").precompile;
 
 const readFile = promisify(fs.readFile, fs);
@@ -29,23 +26,6 @@ readFile("./test/multiple.hbs","utf8").then(function(content){
     // template: here is the template(s) precompiles
 });
 ```
-
-Stream style, for gulp like integration: 
-
-```js
-const gulp = require("gulp");
-const hbsPrecompile = require("hbs").streamPrecompile;
-
-gulp.task('hbs', function() {
-    gulp.src('*.hbs')
-    .pipe(hbsPrecompile())
-    .pipe(concat("templates.js"))
-    .pipe(gulp.dest("./js/"));
-});
-```
-
-
-
 
 
 

@@ -1,55 +1,22 @@
-var gulp = require("gulp");
-var hbs = require('../index');
-var streamPrecompile = hbs.streamPrecompile;
-var precompile = hbs.precompile;
+const { promisify } = require('util');
+const { precompile } = require('../index');
+const assert = require('assert');
+const fs = require("fs");
 
-var fs = require("fs");
 
-// TODO: need to check output
+const readFile = promisify(fs.readFile);
 
-describe('stream style', function () {
 
-	it('all hbs', function (done) {
-		//"hello".should.equal('hello');
-		gulp.src('./test/*.hbs')
-			.pipe(streamPrecompile())
-			.pipe(gulp.dest("./test/test-out/stream-style/")).on("end", function () {
-				done();
-			});
-	});
-
-});
-
-describe('promise style', function () {
+describe('simple', async function () {
 
 	// should Include
-	var shouldHave = "Handlebars.templates['ProjectListNav-list']";
+	const shouldHave = "Handlebars.templates['ProjectListNav-list']";
 
-	it('multiple.hbs', function (done) {
-		readFile("./test/multiple.hbs", "utf8").then(function (content) {
-			return precompile("./test/multiple.hbs", content);
-		}).then(function (template) {
-			if (!template.includes(shouldHave)) {
-				done(`template does not contain ${shouldHave}\nTemplate:\n${template}`);
-			} else {
-				done();
-			}
-		}).catch(function (ex) {
-			done(ex);
-		});
-	});
+	const filePath = './test/multiple.hbs';
+	const content = await readFile("./test/multiple.hbs", "utf8");
+	const tmpl = await precompile(filePath, content);
+
+	// check
+	assert.strict(tmpl.includes(shouldHave), "Does not contain right template code");
 
 });
-
-
-function readFile() {
-	var args = Array.prototype.slice.call(arguments);
-
-	return new Promise(function (resolve, fail) {
-		args.push(function (err, content) {
-			resolve(content);
-		});
-		fs.readFile.apply(fs, args);
-	});
-
-}

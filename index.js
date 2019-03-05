@@ -1,15 +1,10 @@
 var path = require("path");
-var through = require("through2");
 var handlebars = require('handlebars');
-var StringDecoder = require('string_decoder').StringDecoder;
 var htmlparser = require("htmlparser2");
-var File = require("vinyl");
-var ut8decoder = new StringDecoder('utf8');
 
 
 module.exports = {
-	precompile, // to use promise style
-	streamPrecompile // to use stream style (.e.g, in gulp pipe)
+	precompile // to use promise style
 };
 
 // --------- hbs plugin --------- //
@@ -29,40 +24,6 @@ function precompile(filePath, content) {
 		}
 
 		resolve(resultContent);
-	});
-}
-
-// To use stream style, in a gulp.pipe chain for example. 
-//
-// gulp.src(path.join(webappDir,"src/view/**/*.tmpl"))
-// 	.pipe(hbsPrecompile())
-// 	.pipe(concat("templates.js"))
-// 	.pipe(gulp.dest(jsDir));
-function streamPrecompile() {
-	return through.obj(function (inFile, enc, cb) {
-
-		var inFilePathInfo = path.parse(inFile.path);
-		var filePath = path.join(inFilePathInfo.dir, inFilePathInfo.name + ".js");
-
-		// get the string content
-		var content = ut8decoder.write(inFile.contents).toString();
-
-		// get the parts (i.e. {name,content})
-
-		precompile(filePath, content).then(function (resultContent) {
-			var file = new File({
-				cwd: inFile.cwd,
-				base: inFile.base,
-				path: filePath,
-				contents: new Buffer(resultContent)
-			});
-
-			// call the callback for the next step
-			cb(null, file);
-		}).catch(function (ex) {
-			cb(ex, null);
-		});
-
 	});
 }
 

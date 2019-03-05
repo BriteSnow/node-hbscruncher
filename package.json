@@ -2,7 +2,7 @@
   "name": "hbsp",
   "version": "0.3.0-SNAPSHOT",
   "typings": "types/index.d.ts",
-  "description": "A simple Handlebars precompile that support multiple templated per file (when <script tags) - still experimental",
+  "description": "A simple Handlebars precompile that support multiple templated per file (when <script tags)",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -15,10 +15,7 @@
   ],
   "dependencies": {
     "handlebars": "^4.1.0",
-    "htmlparser2": "^3.10.1",
-    "string_decoder": "^1.2.0",
-    "through2": "^3.0.1",
-    "vinyl": "^2.2.0"
+    "htmlparser2": "^3.10.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -31,5 +28,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/BriteSnow/node-hbsp/issues"
+  },
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
   }
 }

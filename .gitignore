@@ -6,6 +6,9 @@ test/test-out
 
 node_modules/
 
+# Ignore vscode
+.vscode
+
 # Ignore sublime text files
 *.sublime-project
 *.sublime-workspace
