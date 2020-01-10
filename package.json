@@ -14,7 +14,7 @@
     "processing"
   ],
   "dependencies": {
-    "handlebars": "^4.6.0",
+    "handlebars": "^4.7.0",
     "htmlparser2": "^4.0.0"
   },
   "devDependencies": {
